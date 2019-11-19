@@ -8,7 +8,7 @@ class Database {
     }
 
     __connect(){
-        mongoose.connect(config.DB.mongodb, {
+        mongoose.connect(config.DB.mongodb_connection_string, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
