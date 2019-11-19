@@ -1,0 +1,36 @@
+####################################
+# Facebook login data
+####################################
+{
+    accessToken: "EAAMPDAmLrg0BADhoP9CxOBmNSWwXAwfoemAlQPkLbgND06smK4mZBXk6uWw3rYi7ac4WV17go25baCFqZBBIgP2TVIhrhcVvADoiZALNXnPhcQAfPkZBfOKsCaryE7oJpQoU4WR8zZAsWI63IZChbBEArh8UyTcmKTFckXRs1F5WTh6Bz5edBAQxg8E6AHJnGDqHRsKs4miAZDZD"
+    data_access_expiration_time: 1581430105
+    email: "jdsaifi729@gmail.com"
+    expiresIn: 6695
+    id: "2648144425245281"
+    name: "Jd Saifi"
+    picture:
+        data:
+            height: 50
+            is_silhouette: false
+            url: "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2648144425245281&height=50&width=50&ext=1576246106&hash=AeT0xkGypKTPeIxz"
+            width: 50
+    signedRequest: "BBv_1Bo5J28BN0ioV6BLGkSapysznd4MGCIIZDP_Uco.eyJ1c2VyX2lkIjoiMjY0ODE0NDQyNTI0NTI4MSIsImNvZGUiOiJBUUE4VmZDR2hnM2s4b0FnQWk4MThHb3N6M3otQl94bngxQ0VLMEhWbGNjSUstMEx2QkQyS0RSdmVva3JMLVVKMGVBWEVYXzNHUHJ0UXAwc3M1aGFfcjZjLVh5eHpmcG9na3dXRHJDMDdZVDFLR2hhR0hLMFh2RkNVeHJLaDhoOTRpVDJxams2azRlUHRMckdZT3BPZ2ZCQktqOUhjX0w4MDBKSGNLV2JnLTI2eGU3eDExaGdWR2JCTGVJbkNwNUhKQ3JJRWplM0hfMkoxOUV5TVF1a2R2OFBGQzVGaWNNdG05Qk9CUENQcXdoVzlYV0lEeTlWcDEydTE5eml6dnExY2pueGlqc3FCUFh5Slh4MlA4eEVIU18xSWRlOWN4RHN5UmdJb0U1c2stcGZnbVBzSU5uNHpFcHZxeE1oazA0eU5yNTNCTDgzcUJ5dUN5dHJocE5LQ3hRWiIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNTczNjU0MTA1fQ"
+    userID: "2648144425245281"
+}
+
+####################################
+# Google login data
+####################################
+{
+    googleId: "103268479108674758698",
+    accessToken: "ya29.ImCwB9y1JFgC4hRiq9E4UCpognkG3E2sJpQxp5htLb2Xn28al67PQ41LaVCzos3rt0FhMIWBiSLcORyfJ48umdNlRT-PCHjQWhdDgKkCngCfGxlcGBPOH8aK5RQsPJAXk40",
+    profileObj: {
+        email: "jdsaifi729@gmail.com"
+        familyName: "Saifi"
+        givenName: "jD"
+        googleId: "103268479108674758698"
+        imageUrl: "https://lh3.googleusercontent.com/a-/AAuE7mAJ0fLjkriOki4MYuH2Ae-fd4rh1QZAQ7HPSz9H=s96-c"
+        name: "jD Saifi"
+    }
+
+}
