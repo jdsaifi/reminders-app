@@ -27,7 +27,7 @@ export const actionReminders = page => {
                 if(status === 404 ){
                     return { status: false, api_status: 404, msg: data.msg, data: data.data }
                 }
-                
+                return {status: false, msg:'Something went wrong.'}
             }else{
                 // something is wrong
                 return {status: false, msg:'Something went wrong.'}
