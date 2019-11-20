@@ -27,7 +27,7 @@ class Testing {
         const moment = require('moment');
 
         res.status(200).json({
-            "moment().format('YYYY-MM-DD')": moment().format('YYYY-MM-DD'),
+            "moment().format('YYYY-MM-DD')": moment().format('LLLL'),
             "utc": moment().utc()
         });
     }
