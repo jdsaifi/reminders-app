@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import _ from 'lodash';
 
 // Bootstrap
 import Alert from 'react-bootstrap/Alert';
 
-import { isAccessToken } from '../../utils/utils';
+import { isAccessToken, BASE_URL } from '../../utils/utils';
 import { actionSocialSignIn, actionAuthorize } from '../../redux/actions/auth.action';
 
 class Login extends React.Component {
@@ -24,14 +25,8 @@ class Login extends React.Component {
 
         // Is access_token exists
         if(isAccessToken()){
-            history.push('/');
+            history.push(`${BASE_URL}`);
         }
-        
-        // if(sessionStorage.getItem('reminderapp::access_token') === null){
-        //     history.push('/');
-        // }else{
-        //     await authorize();
-        // }
         
     }
 
@@ -55,7 +50,7 @@ class Login extends React.Component {
             }
         }
 
-        if(provider === 'google' && res.w3.U3){
+        if(provider === 'google' && !_.isEmpty(res.profileObj)){
             let username = res.profileObj.email.split('@')[0];
             data = {
                 auth_provider: 'google',
@@ -83,7 +78,7 @@ class Login extends React.Component {
                 this.setState({ loginErrorMsg: '' });
                 const { history } = this.props;
                 // Redirect user to Profile(/me) page
-                history.push('/me');
+                history.push(`${BASE_URL}me`);
             }
         }else{
             this.setState({ loginErrorMsg: 'Something went wrong. Please try later.' });

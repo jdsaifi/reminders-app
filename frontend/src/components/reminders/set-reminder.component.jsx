@@ -8,7 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-import { isAccessToken } from '../../utils/utils';
+import { isAccessToken, BASE_URL } from '../../utils/utils';
+import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionSetReminder } from '../../redux/actions/reminders.action';
 
 
@@ -30,18 +31,18 @@ class SetReminder extends React.Component {
     }
 
     async componentDidMount(){
-        const { history } = this.props;
+        const { history, authorize } = this.props;
         
         // Is access_token exists
-        if(!isAccessToken()){
-            history.push('/login');
+        if(!isAccessToken() || !await authorize()){
+            history.push(`${BASE_URL}login`);
         }
     }
 
     saveReminder = async () => {
         const { setReminder } = this.props;
         const { remind_me, enabled, date, time, friends } = this.state;
-        console.log("save reminder fn called.");
+        
         let setReminderData = {remind_me, enabled, date, time, friends};
 
         const res = await setReminder(setReminderData);
@@ -150,6 +151,7 @@ class SetReminder extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
+        authorize: () => dispatch(actionAuthorize()),
         setReminder: data => dispatch(actionSetReminder(data))
     }
 }

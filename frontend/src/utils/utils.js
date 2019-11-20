@@ -7,3 +7,5 @@ export const isAccessToken = () => {
         return token
     }
 }
+
+export const BASE_URL = '/';

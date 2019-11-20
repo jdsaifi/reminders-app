@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 import _ from 'lodash';
 
-import { isAccessToken } from '../../utils/utils';
+import { isAccessToken, BASE_URL } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionMe, actionSearchUser } from '../../redux/actions/users.action';
 import { UserSearchCard } from '../search/user-search-card.component';
@@ -33,7 +33,7 @@ class UserSearch extends React.Component {
 
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
-            history.push('/login');
+            history.push(`${BASE_URL}login`);
         }        
         
         if (prevMatch.params.q !== thisMatch.params.q) {
@@ -59,7 +59,7 @@ class UserSearch extends React.Component {
         
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
-            history.push('/login');
+            history.push(`${BASE_URL}login`);
         }
 
         // load self profile

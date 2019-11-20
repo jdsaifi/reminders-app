@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Pagination from "react-js-pagination";
 
-import { isAccessToken } from '../../utils/utils';
+import { isAccessToken, BASE_URL } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionReminders } from '../../redux/actions/reminders.action';
 
@@ -30,7 +30,8 @@ class HomePage extends React.Component {
         
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
-            history.push('/login');
+            console.log("push url: ", `${BASE_URL}login`);
+            history.push(`${BASE_URL}login`);
         }
 
         // load reminders

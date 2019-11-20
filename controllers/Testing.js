@@ -22,6 +22,15 @@ class Testing {
             dlog(e);
         }
     }
+
+    async testDate (req, res) {
+        const moment = require('moment');
+
+        res.status(200).json({
+            "moment().format('YYYY-MM-DD')": moment().format('YYYY-MM-DD'),
+            "utc": moment().utc()
+        });
+    }
 }
 
 // (async () => {

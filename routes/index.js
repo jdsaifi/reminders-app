@@ -14,6 +14,7 @@ router.get('/test', (req, res) => {
     res.status(200).json({status: 'okay'});
 });
 
+
 /** Route - Signin */
 router.post('/api/v1/social-signin', UsersController.validations.socialSignIn, UsersController.socialSignIn);
 // End Signin
@@ -48,6 +49,7 @@ router.route('/api/v1/friends/request')
 
 /** Route - testing */
 router.get('/test/get-auth-token/:username', TestingCtrl.getAuthToken);
+router.get('/test/date', TestingCtrl.testDate);
 // End testing
 
 

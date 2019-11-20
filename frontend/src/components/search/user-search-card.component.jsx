@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 // Bootstrap
 import Card from 'react-bootstrap/Card'
 
+import { BASE_URL } from '../../utils/utils';
+
 
                     
 
@@ -20,7 +22,7 @@ export const UserSearchCard = ({ dp, display_name, email, username, isOwner }) =
                 <p className="lead mb-0">{display_name}</p>
                 <p className="text-muted">{email}</p>
 
-                <Link to={`/users/${username}`}>View Profile</Link>
+                <Link to={`${BASE_URL}users/${username}`}>View Profile</Link>
             </Card.Body>
         </Card>
     </section>

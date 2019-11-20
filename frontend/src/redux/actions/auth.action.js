@@ -4,7 +4,6 @@ export const actionSocialSignIn = data => {
     return async dispatch => {
         try{
             const socialLoginResponse = await API.post(`/social-signin`, data);
-
             if(socialLoginResponse.status === 201){
                 const { data: { data } } = socialLoginResponse;
 
@@ -16,9 +15,9 @@ export const actionSocialSignIn = data => {
                     payload: {...data, isAuthorized: true}
                 });
 
-                return { status: true }
+                return { c: 10001, status: true, msg: 'Success' }
             }else{
-                return { status: false }
+                return { c: 10002, status: false, msg: 'Something went wrong.' }
             }
             
         }catch(error){
@@ -27,15 +26,15 @@ export const actionSocialSignIn = data => {
                 const { status, data } = response;
                 switch(status){
                     case 422:
-                        return { status: false, api_status: 422, msg: data.msg, data: data.data }
+                        return { c: 10003, status: false, api_status: 422, msg: data.msg, data: data.data }
                     case 409:
-                        return { status: false, api_status: 409, msg: data.msg, data: data.data }
+                        return { c: 10004, status: false, api_status: 409, msg: data.msg, data: data.data }
                     default:
-                        return { status: false, api_status: 500, msg: data.msg, data: data.data }
+                        return { c: 10005, status: false, api_status: 500, msg: data.msg, data: data.data }
                 }                
             }else{
                 // something is wrong
-                return { status: false, api_status: 500, msg: 'Something went wrong.' }
+                return { c: 10006, status: false, api_status: 500, msg: 'Something went wrong.' }
             }
         }
     }

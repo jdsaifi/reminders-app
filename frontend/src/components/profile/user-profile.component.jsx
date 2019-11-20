@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { isAccessToken } from '../../utils/utils';
+import { isAccessToken, BASE_URL } from '../../utils/utils';
 
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionUser } from '../../redux/actions/users.action';
@@ -18,7 +18,7 @@ class UserProfile extends React.Component {
         
         // Is access_token exists
         if(!isAccessToken()){
-            history.push('/login');
+            history.push(`${BASE_URL}login`);
         }
 
         if(await authorize()){
@@ -27,7 +27,7 @@ class UserProfile extends React.Component {
                 // To-Do: show error message
             }
         }else{
-            history.push('/login');
+            history.push(`${BASE_URL}login`);
         }
 
     }

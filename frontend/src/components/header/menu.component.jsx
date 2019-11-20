@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
+import { BASE_URL } from '../../utils/utils';
 
 class HeaderMenu extends React.Component{
     constructor(props){
@@ -32,7 +33,7 @@ class HeaderMenu extends React.Component{
         console.log("search handler called");
         e.preventDefault();
         const { history } = this.props;
-        history.push(`/search/${this.state.search}`);
+        history.push(`${BASE_URL}search/${this.state.search}`);
     }
 
     render(){
@@ -44,9 +45,9 @@ class HeaderMenu extends React.Component{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/" className="nav-link">HOME</Nav.Link>
-                            <Nav.Link href="/me" className="nav-link">PROFILE</Nav.Link>
-                            <Nav.Link href="/set-reminder" className="nav-link">SET REMINDER</Nav.Link>
+                            <Nav.Link href={`${BASE_URL}`} className="nav-link">HOME</Nav.Link>
+                            <Nav.Link href={`${BASE_URL}me`} className="nav-link">PROFILE</Nav.Link>
+                            <Nav.Link href={`${BASE_URL}set-reminder`} className="nav-link">SET REMINDER</Nav.Link>
                         </Nav>
 
                         {
@@ -62,8 +63,8 @@ class HeaderMenu extends React.Component{
                         <Nav>
                             { 
                                 isAuthorized === false ? 
-                                <Nav.Link href="/login" className="nav-link">LOGIN</Nav.Link>
-                                :<Nav.Link href="/logout" className="nav-link">LOGOUT</Nav.Link>
+                                <Nav.Link href={`${BASE_URL}login`} className="nav-link">LOGIN</Nav.Link>
+                                :<Nav.Link href={`${BASE_URL}logout`} className="nav-link">LOGOUT</Nav.Link>
                             }
                         </Nav>
 
