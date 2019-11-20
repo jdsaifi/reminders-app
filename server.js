@@ -79,9 +79,9 @@ process.on('uncaughtException', function (err) {
 });
 
 
-const PORT = process.env.PORT || config.API.PORT;
+const PORT = process.env.PORT || 3000;
 const HOST = config.API.HOST || 'localhost';
-app.listen(PORT, HOST, async (error) => {    
+app.listen(PORT, async (error) => {    
     if (error) {
         console.error('Unable to listen for connections', error);
         process.exit(10);
