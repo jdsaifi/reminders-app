@@ -6,8 +6,12 @@ import Card from 'react-bootstrap/Card'
 
 class ReminderCard extends React.Component {
     render(){
-        const { timezone, time, date, remind_me, owner: { display_name, dp } } = this.props;
+        const { time, date, remind_me, owner: { display_name, dp }, friend } = this.props;
         let remind_me_on = moment(`${date} ${time}`);
+
+        let friendName = '';
+        if(friend && friend.hasOwnProperty('display_name'))
+            friendName = friend.display_name;
 
         return (
             <section className="row mt-3">
@@ -28,6 +32,10 @@ class ReminderCard extends React.Component {
                                     <div className="col-md">
                                         <strong className="text-muted">Will remind at </strong>
                                         { remind_me_on.format('LLLL') }
+                                    </div>
+                                    <div className="col-md">
+                                        <strong className="text-muted">Reminder for: </strong>
+                                        <i>{display_name}</i> <i>{friendName!== ''? `& ${friendName}`: ''}</i>
                                     </div>
                                 </div>
                                 

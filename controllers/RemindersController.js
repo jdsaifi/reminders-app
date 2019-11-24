@@ -50,14 +50,17 @@ class RemindersController {
             // const friendsIdList = friendsList.map(friend => friend._id);
 
             // let _dateTime = scheduleTime(body.date, body.time)
+
+            let datetime = moment(`${body.date} ${body.time}`);
             
             let remindMe = new Reminder({
+                remind_me: body.remind_me,
                 date: body.date,
                 time: body.time,
                 owner: req.auth.user._id,
                 friend: friend,
-                remind_on: _dateTime.date,
-                remind_on_unix: _dateTime.unix
+                remind_on: datetime,
+                remind_on_unix: datetime.unix()
             });
             
             let savedReminder = await remindMe.save();
@@ -105,7 +108,7 @@ class RemindersController {
                     { 
                         $or: [
                             { owner: user._id },
-                            { friends: { $in: [ user._id ] } }
+                            { friend: user._id }
                         ] 
                     }
                 ]
@@ -116,7 +119,7 @@ class RemindersController {
             let [ count, remindersList ] = await Promise.all([
                 Reminder.countDocuments(where),
                 Reminder.find(where, select)
-                .populate('friends', '_id username email display_name first_name last_name dp createdAt')
+                .populate('friend', '_id display_name')
                 .populate('owner', '_id username display_name dp')
                 .sort('remind_on')
                 .limit(req.query.limit).skip(req.skip).lean().exec()

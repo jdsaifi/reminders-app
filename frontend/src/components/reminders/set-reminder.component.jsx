@@ -34,14 +34,13 @@ class SetReminder extends React.Component {
 
             // form data
             remind_me: '',
-            enabled:true,
             date: validDate.converted.date,
             dateDisplay: 'Today',
             time: validDate.converted.time,
             timeDisplay: validDate.inputs.time,
-            friends:'',
             partsOfTheDay: parts,
-            showPastDateError: false
+            showPastDateError: false,
+            friend: ''
         }
         
     }
@@ -60,10 +59,9 @@ class SetReminder extends React.Component {
 
     saveReminder = async () => {
         const { setReminder } = this.props;
-        const { remind_me, enabled, date, time, friends } = this.state;
+        const { remind_me, date, time, friend } = this.state;
         
-        
-        let setReminderData = {remind_me, enabled, date, time, friends};
+        let setReminderData = {remind_me, date, time, friend};
 
         const res = await setReminder(setReminderData);
 
@@ -141,7 +139,7 @@ class SetReminder extends React.Component {
             const valid = validateDateTime(date, time);
             console.log('time dropdown handler: ');
             console.table(valid)
-            this.setState({showPastDateError: !valid.status});
+            this.setState({showPastDateError: !valid.status, time: valid.converted.time});
             
 
         });
@@ -155,7 +153,8 @@ class SetReminder extends React.Component {
             partsOfTheDay, 
             dateDisplay, 
             timeDisplay, 
-            showPastDateError 
+            showPastDateError,
+            friend
         } = this.state;
 
         const { friends } = this.props;
@@ -182,7 +181,26 @@ class SetReminder extends React.Component {
                     <Card className="mx-auto w-50">
                     <Card.Header>Set a reminder</Card.Header>
                     <Card.Body>
-                        <Form.Control type="text" placeholder="Remind me..." name="remind_me" value={remind_me} onChange={this.onChange} />
+                        <div className="row">
+                            <div className="col-md">
+                                <Form.Control type="text" placeholder="Remind me..." name="remind_me" value={remind_me} onChange={this.onChange} className="align-text-bottom" />
+                            </div>
+
+                            <div className="col-md">
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Control as="select" value={friend} name="friend" onChange={this.onChange} >
+                                    <option value="">Friends</option>
+                                    {
+                                        friends.map(friend => <option key={friend._id} value={friend._id}>
+                                            {friend.display_name}
+                                        </option>)
+                                    }
+                                    
+                                </Form.Control>
+                            </Form.Group>
+                            </div>
+                        </div>
+
                         <hr />
 
 
