@@ -2,7 +2,8 @@
 const _state = {
     profile: {},
     users: [],
-    userSearchMeta: {}
+    userSearchMeta: {},
+    friends: []
 };
 
 export default (state = _state, { type, payload }) => {
@@ -11,6 +12,8 @@ export default (state = _state, { type, payload }) => {
             return {...state, profile: { ...payload } }
         case 'search_user':
             return {...state, ...payload}
+        case 'loadFriends':
+            return {...state, friends: [...payload] }
         default:
             return state
     }

@@ -19,6 +19,7 @@
     "express-validator": "^6.2.0",
     "jsonwebtoken": "^8.5.1",
     "later": "^1.2.0",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.7.9",

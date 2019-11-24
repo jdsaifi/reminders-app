@@ -11,7 +11,7 @@ import { BASE_URL } from '../../utils/utils';
 
 // alt-src="https://avatars.dicebear.com/v2/avataaars/xxd.svg"
 export const UserSearchCard = ({ dp, display_name, email, username, isOwner }) => (
-    <section className="col-sm-12 col-md-4 col-lg-3">
+    <section className="col-sm-12 col-md-4 col-lg-4">
         <Card style={{}} className="mx-auto mb-4 p-1">
             <Card.Body className="text-center">
                 <img 

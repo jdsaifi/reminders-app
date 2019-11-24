@@ -43,6 +43,7 @@ const userSchema = mongoose.Schema({
         default: null
     },
     access_token: String,
+    timezone: String,
     friends: [{
         type: ObjectId,
         ref: "users"
@@ -55,6 +56,10 @@ const userSchema = mongoose.Schema({
         type: ObjectId,
         ref: "users"
     }],
+    blocked: [{
+        type: ObjectId,
+        ref: "users"
+    }]
 }, {
     timestamps:true,
     toJSON: {

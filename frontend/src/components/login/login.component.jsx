@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 // Bootstrap
 import Alert from 'react-bootstrap/Alert';
@@ -46,7 +47,8 @@ class Login extends React.Component {
                 display_name: res.name,
                 dp: `https://graph.facebook.com/${res.id}/picture?type=large`,
                 first_name: res.first_name || "",
-                last_name: res.last_name || ""
+                last_name: res.last_name || "",
+                timezone: moment.tz.guess()
             }
         }
 
@@ -61,7 +63,8 @@ class Login extends React.Component {
                 display_name: res.profileObj.name,
                 dp: res.profileObj.imageUrl,
                 first_name: res.profileObj.givenName || "",
-                last_name: res.profileObj.familyName || ""
+                last_name: res.profileObj.familyName || "",
+                timezone: moment.tz.guess()
             }
         }
 
@@ -127,7 +130,6 @@ class Login extends React.Component {
                                 onFailure={res => this.signin(res, 'google')}
                             />
                     </div>
-                    
                 </article>
             </section>
         )

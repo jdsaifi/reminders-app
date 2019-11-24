@@ -48,11 +48,6 @@ module.exports.scheduleTime = (date, time) => {
         _date.add(timeArr[0] || 0, 'h');
         _date.add(timeArr[1] || 0, 'm');
 
-        // console.log(_date);
-        // console.log(_date.toDate());
-        // console.log(_date.utc());
-        // return;
-
         return {
             convertedInputs: {
                 date,time

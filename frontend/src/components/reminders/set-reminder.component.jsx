@@ -1,5 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
+import _ from 'lodash';
 
 // Bootstrap
 import Button from 'react-bootstrap/Button';
@@ -7,15 +11,22 @@ import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-import { isAccessToken, BASE_URL } from '../../utils/utils';
+
+import { isAccessToken, BASE_URL, partsOfTheDay, validateDateTime } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionSetReminder } from '../../redux/actions/reminders.action';
-
+import { actionLoadFriends } from '../../redux/actions/users.action';
 
 class SetReminder extends React.Component {
     constructor(props){
         super(props);
+
+        const parts = partsOfTheDay();
+
+        const validDate = validateDateTime(moment().format('YYYY-MM-DD'), parts[1] || 'Night');
+
         this.state = {
             showErrorAlert: false,
             showSuccessAlert: false,
@@ -24,24 +35,33 @@ class SetReminder extends React.Component {
             // form data
             remind_me: '',
             enabled:true,
-            date: 'today',
-            time: 'morning',
-            friends:''
+            date: validDate.converted.date,
+            dateDisplay: 'Today',
+            time: validDate.converted.time,
+            timeDisplay: validDate.inputs.time,
+            friends:'',
+            partsOfTheDay: parts,
+            showPastDateError: false
         }
+        
     }
 
     async componentDidMount(){
-        const { history, authorize } = this.props;
+        const { history, authorize, loadFriends } = this.props;
         
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
             history.push(`${BASE_URL}login`);
         }
+
+        const loadFriendsRes = await loadFriends();
+        console.log('loadFriendsRes : ', loadFriendsRes);
     }
 
     saveReminder = async () => {
         const { setReminder } = this.props;
         const { remind_me, enabled, date, time, friends } = this.state;
+        
         
         let setReminderData = {remind_me, enabled, date, time, friends};
 
@@ -79,10 +99,67 @@ class SetReminder extends React.Component {
           super easy to update the state
         */
         this.setState({ [e.target.name]: e.target.value });
-      }
+    }
+
+    dateDropdownHandler = (val) => {        
+        let date = null;
+        let dateDisplay = val;
+        if(_.isObject(dateDisplay)){
+            date = moment(val);
+            if(date.format('YYYY') == moment().format('YYYY')){                
+                dateDisplay = date.format('dddd, MMMM DD');
+            }else{
+                dateDisplay = date.format('dddd, MMMM DD, YYYY');
+            }
+        }else{
+            date = moment();
+            if(dateDisplay === 'Tomorrow'){
+                date.add(1, 'd');
+            }
+        }
+        date = date.format('YYYY-MM-DD');
+        
+        this.setState({ date, dateDisplay }, () => {
+            const { date, time } = this.state;
+            const valid = validateDateTime(date, time);
+            console.log('date dropdown handler: ');
+            console.table(valid)
+            this.setState({showPastDateError: !valid.status});
+        });
+    }
+
+    timeDropdownHandler = (val) => {
+        console.log('time dropdownhandler: ', val);
+        let time = val;
+        let timeDisplay = val;
+        if(_.isObject(time)){
+            time = moment(val).format("HH:mm");
+            timeDisplay = moment(val).format("hh:mm A");
+        }
+        this.setState({ time, timeDisplay }, () => {
+            const { date, time } = this.state;
+            const valid = validateDateTime(date, time);
+            console.log('time dropdown handler: ');
+            console.table(valid)
+            this.setState({showPastDateError: !valid.status});
+            
+
+        });
+    }
 
     render(){
-        const { showErrorAlert, showSuccessAlert, remind_me, date, time } = this.state;
+        const { 
+            showErrorAlert, 
+            showSuccessAlert, 
+            remind_me, 
+            partsOfTheDay, 
+            dateDisplay, 
+            timeDisplay, 
+            showPastDateError 
+        } = this.state;
+
+        const { friends } = this.props;
+
         return (
             <Container className="mt-5">
                 {
@@ -101,7 +178,6 @@ class SetReminder extends React.Component {
                     : ''
                 }
 
-
                 <Form>
                     <Card className="mx-auto w-50">
                     <Card.Header>Set a reminder</Card.Header>
@@ -109,51 +185,112 @@ class SetReminder extends React.Component {
                         <Form.Control type="text" placeholder="Remind me..." name="remind_me" value={remind_me} onChange={this.onChange} />
                         <hr />
 
+
+
                         <section className="row">
                             <div className="col-md">
+
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control as="select" name="date" onChange={this.onChange} value={date}>
-                                        <option value="today">Today</option>
-                                        <option value="tomorrow">tomorrow</option>
-                                        <option value="set">Set date</option>
-                                    </Form.Control>
+                                    <Dropdown className="w-100 ">
+                                        <Dropdown.Toggle variant="light" id="dropdown-basic" className="w-100 text-left">
+                                                {dateDisplay}
+                                        </Dropdown.Toggle>
+
+                                        <Dropdown.Menu className="w-100">
+                                            <Dropdown.Item onClick={()=>this.dateDropdownHandler('Today')}>Today</Dropdown.Item>
+                                            <Dropdown.Item onClick={()=>this.dateDropdownHandler('Tomorrow')}>Tomorrow</Dropdown.Item>
+                                            <Dropdown.Item className="hover-dropdown">
+                                                Set date
+                                            </Dropdown.Item>
+                                            <div className="hover-cal">
+                                                <DatePicker inline
+                                                    selected={new Date()}
+                                                    onChange={(date) => this.dateDropdownHandler(date)}
+                                                />
+                                            </div>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </Form.Group>
                             </div>
                             <div className="col-md">
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>Time</Form.Label>
-                                    <Form.Control as="select" name="time" onChange={this.onChange} value={time}>
-                                        <option value="morning">Morning</option>
-                                        <option value="afternoon">Afternoon</option>
-                                        <option value="evening">Evening</option>
-                                        <option value="night">Night</option>
-                                        <option value="set_time">Set time</option>
-                                    </Form.Control>
+                                    <Dropdown className="w-100 ">
+                                        <Dropdown.Toggle variant="light" id="dropdown-basic" className="w-100 text-left">
+                                                {timeDisplay}
+                                        </Dropdown.Toggle>
+
+                                        <Dropdown.Menu className="w-100">
+                                            {
+                                                partsOfTheDay.map(
+                                                    part => <Dropdown.Item key={part} onClick={
+                                                        ()=>this.timeDropdownHandler(part)
+                                                    }>{part}</Dropdown.Item>)
+                                            }
+
+                                            <Dropdown.Item className="hover-dropdown">
+                                                Set time
+                                            </Dropdown.Item>
+
+                                            <div className="hover-cal">
+                                                
+                                            <DatePicker inline
+                                                selected={new Date()}
+                                                onChange={date => this.timeDropdownHandler(date)}
+                                                showTimeSelect
+                                                showTimeSelectOnly
+                                                timeIntervals={30}
+                                                timeCaption="Time"
+                                                dateFormat="h:mm aa"
+                                            />
+                                            </div>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </Form.Group>
                             </div>
                         </section>
 
                     </Card.Body>
-
                     <Card.Footer className="text-muted">
-                        <Button variant="outline-dark" onClick={this.saveReminder}>Save Reminder</Button>
+                        <div className="row">
+                            <div className='col-md'>
+                                <Button 
+                                    variant="outline-dark" 
+                                    onClick={this.saveReminder}
+                                    disabled={ remind_me === '' || showPastDateError === true ? `disabled` : null}
+                                >Save Reminder</Button>
+                            </div>
+                            <div className='col-md error-msg text-right'>
+                                {
+                                    showPastDateError === true ? 
+                                    <span>
+                                        <i className="fa fa-exclamation-triangle"></i> 
+                                        You can not reminder for past
+                                    </span>
+                                    : null
+                                }
+                                
+                            </div>
+                        </div>
                     </Card.Footer>
                     </Card>
-                </Form>          
-                
+                </Form>
             </Container>
-            
         )
     }
 }
 
+const mapStateToProps = state => ({
+    friends: state.users.friends
+})
 
 const mapDispatchToProps = dispatch => {
     return {
         authorize: () => dispatch(actionAuthorize()),
-        setReminder: data => dispatch(actionSetReminder(data))
+        setReminder: data => dispatch(actionSetReminder(data)),
+        loadFriends: () => dispatch(actionLoadFriends())
     }
 }
 
-export default connect(null, mapDispatchToProps)(SetReminder);
+export default connect(mapStateToProps, mapDispatchToProps)(SetReminder);

@@ -40,24 +40,24 @@ class RemindersController {
         const { body } = req;
 
         try{
-            const friends = (body.friends || '').length > 0 ? body.friends.split(',') : [];
+            // const friends = (body.friends || '').length > 0 ? body.friends.split(',') : [];
+            const friend = body.friend || '';
             
-            const friendsList = await User.find({
-                username: { $in: friends }
-            }, ["username", "display_name"]);
+            // const friendsList = await User.find({
+            //     username: { $in: friends }
+            // }, ["username", "display_name"]);
             
-            const friendsIdList = friendsList.map(friend => friend._id);
+            // const friendsIdList = friendsList.map(friend => friend._id);
 
-            let _dateTime = scheduleTime(body.date, body.time)
+            // let _dateTime = scheduleTime(body.date, body.time)
             
             let remindMe = new Reminder({
-                ...body,
-                date: _dateTime.convertedInputs.date,
-                time: _dateTime.convertedInputs.time,
+                date: body.date,
+                time: body.time,
                 owner: req.auth.user._id,
-                friends: friendsIdList,
+                friend: friend,
                 remind_on: _dateTime.date,
-                remind_on_unix: _dateTime.unix 
+                remind_on_unix: _dateTime.unix
             });
             
             let savedReminder = await remindMe.save();
@@ -70,8 +70,6 @@ class RemindersController {
                     remind_me: savedReminder.remind_me,
                     date: savedReminder.date,
                     time: savedReminder.time,
-                    enabled: savedReminder.enabled,
-                    friends: friendsList,
                     remind_on: savedReminder.remind_on,
                     remind_on_unix: savedReminder.remind_on_unix,
                     createdAt: savedReminder.createdAt

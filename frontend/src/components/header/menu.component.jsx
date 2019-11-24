@@ -21,10 +21,6 @@ class HeaderMenu extends React.Component{
         }
     }
 
-    async componentDidMount(){
-        console.log("props", this.props);
-    }
-
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }

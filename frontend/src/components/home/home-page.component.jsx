@@ -6,6 +6,7 @@ import Pagination from "react-js-pagination";
 import { isAccessToken, BASE_URL } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionReminders } from '../../redux/actions/reminders.action';
+import { actionMe } from '../../redux/actions/users.action';
 
 // Components
 import ReminderCard from '../reminders/reminder-card.component';
@@ -26,17 +27,21 @@ class HomePage extends React.Component {
     }
 
     async componentDidMount(){
-        const { history, authorize, loadReminders } = this.props;
+        const { history, authorize, loadReminders, meProfile } = this.props;
         
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
             console.log("push url: ", `${BASE_URL}login`);
-            history.push(`${BASE_URL}login`);
+            return history.push(`${BASE_URL}login`);
         }
+
+        // load self profile
+        await meProfile();
 
         // load reminders
         const res = await loadReminders(this.state.reminders_meta.current_page);
         if(res.status === true){
+            
             this.setState({
                 reminders_meta: res.meta
             });
@@ -66,7 +71,7 @@ class HomePage extends React.Component {
     }
 
     render(){
-        const { reminders } = this.props;
+        const { reminders, user: { timezone } } = this.props;
         const { apiMsg, reminders_meta: { current_page, items_count } } = this.state;
         
         if(apiMsg !== '') return (<h3 className="text-center lead mt-4">{apiMsg}</h3>);
@@ -80,10 +85,9 @@ class HomePage extends React.Component {
                     reminders.map( reminder => {
                         return <ReminderCard 
                         key={reminder._id} 
-                        display_name={reminder.owner.display_name}
-                        dp={reminder.owner.dp}
-                        remind_me={reminder.remind_me} 
-                        remind_on={reminder.remind_on} 
+                        timezone={timezone}
+                        {...reminder}
+
                         />
                     })
                 }
@@ -103,13 +107,15 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    reminders: state.reminders.list
+    reminders: state.reminders.list,
+    user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         authorize: () => dispatch(actionAuthorize()),
         loadReminders: page => dispatch(actionReminders(page)),
+        meProfile: () => dispatch(actionMe())
     }
 }
 

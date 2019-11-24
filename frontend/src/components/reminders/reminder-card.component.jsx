@@ -1,12 +1,13 @@
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone'; 
 
 // Bootstrap
 import Card from 'react-bootstrap/Card'
 
 class ReminderCard extends React.Component {
     render(){
-        const { display_name, dp, remind_me, remind_on } = this.props;
+        const { timezone, time, date, remind_me, owner: { display_name, dp } } = this.props;
+        let remind_me_on = moment(`${date} ${time}`);
 
         return (
             <section className="row mt-3">
@@ -26,7 +27,7 @@ class ReminderCard extends React.Component {
                                 <div className="row">
                                     <div className="col-md">
                                         <strong className="text-muted">Will remind at </strong>
-                                        {moment(remind_on).format('LLLL')}
+                                        { remind_me_on.format('LLLL') }
                                     </div>
                                 </div>
                                 

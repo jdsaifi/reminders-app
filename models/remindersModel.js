@@ -14,13 +14,9 @@ const remindersSchema = mongoose.Schema({
         type: ObjectId,
         ref: "users"
     },
-    friends: [{
+    friend: {
         type: ObjectId,
         ref: "users"
-    }],
-    enabled: {
-        type: Boolean,
-        default: true
     },
     // freq_type: {
     //     type: String,
@@ -53,7 +49,6 @@ const remindersSchema = mongoose.Schema({
         type: Number,
         required: true
     }
-
 }, {
     timestamps: true
 });

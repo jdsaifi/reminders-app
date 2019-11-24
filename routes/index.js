@@ -22,6 +22,8 @@ router.post('/api/v1/social-signin', UsersController.validations.socialSignIn, U
 /** Route - Users */
 router.get('/api/v1/authorize', UsersController.authorize);
 router.get('/api/v1/users/:username', UsersController.validations.profile, UsersController.profile);
+router.post('/api/v1/users/:username/block', UsersController.blockUser);
+router.post('/api/v1/users/:username/unblock', UsersController.unblockUser);
 // End Users
 
 /** Route - Search */
@@ -42,7 +44,14 @@ router.route('/api/v1/expired-reminders')
 
 /** Route - Friends */
 router.route('/api/v1/friends/request')
-    .post(FriendsController.sendRequest)
+    .post(FriendsController.validations.sendRequest, FriendsController.sendRequest)
+
+router.route('/api/v1/friends/requests')
+    .get(FriendsController.requests)
+
+router.post('/api/v1/friends/requests/:username/accept', FriendsController.acceptRequest);
+router.post('/api/v1/friends/requests/:username/reject', FriendsController.rejectRequest);
+router.get('/api/v1/friends', FriendsController.getFriendsList);
 // End Friends
 
 

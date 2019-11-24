@@ -22,6 +22,7 @@ import UserProfile from './components/profile/user-profile.component';
 import HomePage from './components/home/home-page.component';
 import SetReminder from './components/reminders/set-reminder.component';
 import UserSearch from './components/search/users-search.component';
+import FriendRequests from './components/frends/requests.components';
 import { BASE_URL } from './utils/utils'
 
 
@@ -41,6 +42,7 @@ class App extends React.Component {
             <Route path={`${BASE_URL}logout`} component={Logout} />
             <Route path={`${BASE_URL}set-reminder`} component={SetReminder} />
             <Route exact path={`${BASE_URL}search/:q`} component={UserSearch} />
+            <Route path={`${BASE_URL}requests`} component={FriendRequests} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

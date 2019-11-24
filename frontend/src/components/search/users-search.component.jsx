@@ -34,7 +34,7 @@ class UserSearch extends React.Component {
         // Is access_token exists
         if(!isAccessToken() || !await authorize()){
             history.push(`${BASE_URL}login`);
-        }        
+        }
         
         if (prevMatch.params.q !== thisMatch.params.q) {
             const res = await searchUser(thisMatch.params.q || '', current_page);
@@ -50,7 +50,7 @@ class UserSearch extends React.Component {
                 });
             }
         }
-      }
+    }
 
     async componentDidMount(){
         const { history, authorize, match: { params }, loadSelf, searchUser } = this.props;

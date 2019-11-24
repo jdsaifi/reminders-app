@@ -24,10 +24,20 @@ class Testing {
     }
 
     async testDate (req, res) {
-        const moment = require('moment');
+        const moment = require('moment-timezone');
+        const date = moment('2019-11-21T09:00:00.000+00:00');
+        const dateIST = moment('2019-11-21').tz('Asia/Kolkata')
+
+        console.log("dateIST: ", dateIST);
+
 
         res.status(200).json({
-            "moment().format('YYYY-MM-DD')": moment().format('LLLL'),
+            "date": date,
+            "localformat date ": date.format(),
+            "localformat date.utc ": date.format('LLLL'),
+            "localformat date.IST ": dateIST,
+            "localformat ": moment().format(),
+            "moment().format('LLLL')": moment().format('LLLL'),
             "utc": moment().utc()
         });
     }

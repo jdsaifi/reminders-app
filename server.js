@@ -79,7 +79,7 @@ process.on('uncaughtException', function (err) {
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const HOST = config.API.HOST || 'localhost';
 app.listen(PORT, async (error) => {    
     if (error) {
