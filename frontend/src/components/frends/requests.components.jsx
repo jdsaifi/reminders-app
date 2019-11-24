@@ -24,9 +24,7 @@ class FriendRequests extends React.Component{
         if(!isAccessToken() || !await authorize()){
             history.push(`${BASE_URL}login`);
         }
-
-        console.log("loadded")
-
+        
         const accessToken = sessionStorage.getItem('reminderapp::access_token');
         const { status, data: { status: api_status, data } } = await API.get(`/friends/requests`, {
             headers: {

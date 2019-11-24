@@ -44,6 +44,10 @@ const userSchema = mongoose.Schema({
     },
     access_token: String,
     timezone: String,
+    can_friend_set_reminder: {
+        type: Boolean,
+        default: true
+    },
     friends: [{
         type: ObjectId,
         ref: "users"

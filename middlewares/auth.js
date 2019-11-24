@@ -9,11 +9,6 @@ const WHITLE_LIST_URL = [
 ];
 
 const auth = async (req, res, next) => {
-    console.log("");
-    console.log("");
-    console.log("Header: ", req.headers);
-    console.log("");
-    console.log("");
 
     if(WHITLE_LIST_URL.includes(req.originalUrl)){
         return next();

@@ -18,6 +18,10 @@ class UsersController {
                 check('auth_provider_access_token').exists(),
                 check('username').exists().isString(),
                 check('email').exists().bail().isEmail()
+            ],
+            updateProfile: [
+                check('display_name').exists().isString(),
+                check('can_friend_set_reminder').exists().isBoolean(),
             ]
         };
     }
@@ -44,7 +48,7 @@ class UsersController {
         const auth = req.auth.user;
         const { username } = req.params;
         const select = `auth_provider auth_provider_access_token auth_provider_id createdAt display_name dp email
-        first_name last_name updatedAt username timezone`;
+        first_name last_name updatedAt username timezone can_friend_set_reminder`;
         let res_data = {};        
 
         try{
@@ -397,6 +401,55 @@ class UsersController {
         }
     }
     // End blockUser();
+
+    /**
+     * Update Profile
+     */
+    async updateProfile(req, res) {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({
+                status: 'error',
+                msg: 'Something went wrong.',
+                data: errors.array()
+            });
+        }        
+
+        try{
+            const auth = req.auth.user;
+            const { display_name, can_friend_set_reminder } = req.body;
+
+            const _res = await User.updateOne({_id: auth._id}, {
+                $set: {
+                    display_name, can_friend_set_reminder
+                }
+            });
+
+            if(_res.nModified < 1) throw new Error('unable_to_update');
+            
+            res.status(201).json({
+                status: 'okay',
+                msg: 'Profile has been updated.'
+            });
+           
+        }catch(error){
+            console.log("error: ", error)
+            switch(error.message){   
+                case 'unable_to_update':
+                    res.status(500).json({
+                        status: 'error',
+                        msg: 'Unable to update',
+                    });
+                    break;
+                default:
+                    res.status(500).json({
+                        status: 'error',
+                        msg: error.message
+                    });
+            }
+        }
+    }
 
 
 }

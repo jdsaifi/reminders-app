@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 const config = require('../config');
 const dAPI = require('debug')('API');
 
+        
+
 class Database {
     constructor(){
         this.__connect();
+        // mongoose.set('debug', true);
     }
 
     __connect(){

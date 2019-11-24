@@ -16,7 +16,8 @@ const remindersSchema = mongoose.Schema({
     },
     friend: {
         type: ObjectId,
-        ref: "users"
+        ref: "users",
+        default: null
     },
     // freq_type: {
     //     type: String,

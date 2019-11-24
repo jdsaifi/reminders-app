@@ -14,7 +14,7 @@ import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-import { isAccessToken, BASE_URL, partsOfTheDay, validateDateTime } from '../../utils/utils';
+import { isAccessToken, BASE_URL, partsOfTheDay, validateDateTime, TIME_PICKER_TIME_INTERVALS } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionSetReminder } from '../../redux/actions/reminders.action';
 import { actionLoadFriends } from '../../redux/actions/users.action';
@@ -258,7 +258,7 @@ class SetReminder extends React.Component {
                                                 onChange={date => this.timeDropdownHandler(date)}
                                                 showTimeSelect
                                                 showTimeSelectOnly
-                                                timeIntervals={30}
+                                                timeIntervals={TIME_PICKER_TIME_INTERVALS}
                                                 timeCaption="Time"
                                                 dateFormat="h:mm aa"
                                             />

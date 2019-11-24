@@ -31,7 +31,7 @@ export const ProfileCard = ({ id, dp, display_name, email, isOwner, isFriend, is
             <p className="lead mb-0">{display_name}</p>
             <p className="text-muted">{email}</p>
 
-            { isOwner ? <div className="text-right mb-0"><a href="/edit">Edit Profile</a></div> : null }
+            { isOwner ? <div className="text-right mb-0"><a href="/me/edit">Edit Profile</a></div> : null }
             
         </Card.Body>
     </Card>

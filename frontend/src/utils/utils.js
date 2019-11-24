@@ -9,6 +9,8 @@ const TIME_SHIFTS = {
     'night':        {start: 21, end: 4,  fixed: 21},
 };
 
+export const TIME_PICKER_TIME_INTERVALS = 15;
+
 export const isAccessToken = () => {
     const token = sessionStorage.getItem('reminderapp::access_token');
 

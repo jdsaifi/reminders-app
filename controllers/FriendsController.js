@@ -349,14 +349,14 @@ console.log(requestsInList);
      */
     async getFriendsList (req, res){
         const clog = req.app.crlog;
-        clog("rejectRequest() called");
-
         const auth = req.auth.user;
 
         try{
 
             const list = await User.findOne({ _id: auth._id }, "_id")
-            .populate('friends', '_id display_name')
+            .populate('friends', '_id display_name', {
+               can_friend_set_reminder: true
+            })
             .lean().exec();
 
             if(list.friends.length > 0){
