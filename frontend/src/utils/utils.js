@@ -22,6 +22,7 @@ export const isAccessToken = () => {
 }
 
 export const BASE_URL = '/';
+export const parts = partsOfTime;
 
 export const partsOfTheDay = () => {
     /*
@@ -55,8 +56,6 @@ export const validateDateTime = (date, time) => {
                 date = moment().add(1, 'd').format('YYYY-MM-DD');
         }
     }
-
-    console.log("check if date is today: ", )
 
     if(partsOfTime.includes(time)){
         const currentHour  = new Date().getHours();

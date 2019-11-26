@@ -291,13 +291,13 @@ class UserProfile extends React.Component {
                     </div>
                 </div>}
 
-                <div className="row mt-5 br1">
-                    <article className="col-md-6 col-lg-4 col-sm-12 text-cetner bb1">
-                        <ProfileCard {...user} isOwner={false} />
+                <div className="row mt-5">
+                    <article className="col-md text-cetner">
+                        <ProfileCard {...user} isOwner={false} handleBlock={this.handleBlock} />
                     </article>
-                    <article className="col-md-6 col-lg-8 col-sm-12 bg1">
-                        <ProfileGlance {...user} isOwner={false} handleBlock={this.handleBlock} />
-                    </article>
+                    {/* <article className="col-md-6 col-lg-8 col-sm-12 bg1">
+                        <ProfileGlance {...user} isOwner={false}  />
+                    </article> */}
                 </div>
             </section>
         )

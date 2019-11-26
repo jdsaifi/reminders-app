@@ -25,8 +25,7 @@ class HeaderMenu extends React.Component{
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    searchHandler = async (e) => {
-        console.log("search handler called");
+    searchHandler = async (e) => {        
         e.preventDefault();
         const { history } = this.props;
         history.push(`${BASE_URL}search/${this.state.search}`);

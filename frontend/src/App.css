@@ -141,3 +141,14 @@ box-shadow: -1px 11px 14px 0px rgba(209,209,209,1);
 .error-msg{
   color: red;
 }
+
+.more-menu{
+  color:#9b9b9b;
+  font-size: 20px;
+}
+.more-menu:hover{
+  color: #c7c7c7;
+}
+.more-menu:after{
+  display: none !important;
+}

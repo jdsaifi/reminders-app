@@ -36,12 +36,12 @@ class Profile extends React.Component {
         return (
             <section className="container">
                 <div className="row mt-5 br1">
-                    <article className="col-md-4 col-sm-6 text-cetner bb1">
+                    <article className="col-md text-cetner">
                         <ProfileCard {...user} isOwner={true} />
                     </article>
-                    <article className="col-md bg1">
+                    {/* <article className="col-md bg1">
                         <ProfileGlance {...user} />
-                    </article>
+                    </article> */}
                 </div>
             </section>
         )

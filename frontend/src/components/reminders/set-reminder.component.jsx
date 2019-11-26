@@ -14,18 +14,19 @@ import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-import { isAccessToken, BASE_URL, partsOfTheDay, validateDateTime, TIME_PICKER_TIME_INTERVALS } from '../../utils/utils';
+import { isAccessToken, BASE_URL, partsOfTheDay, parts, validateDateTime, TIME_PICKER_TIME_INTERVALS } from '../../utils/utils';
 import { actionAuthorize } from '../../redux/actions/auth.action';
 import { actionSetReminder } from '../../redux/actions/reminders.action';
 import { actionLoadFriends } from '../../redux/actions/users.action';
+import queryString from 'query-string';
 
 class SetReminder extends React.Component {
     constructor(props){
         super(props);
 
-        const parts = partsOfTheDay();
+        const qs = queryString.parse(props.location.search);
 
-        const validDate = validateDateTime(moment().format('YYYY-MM-DD'), parts[1] || 'Night');
+        const validDate = validateDateTime(moment().format('YYYY-MM-DD'), parts[0]);
 
         this.state = {
             showErrorAlert: false,
@@ -37,11 +38,12 @@ class SetReminder extends React.Component {
             date: validDate.converted.date,
             dateDisplay: 'Today',
             time: validDate.converted.time,
-            timeDisplay: validDate.inputs.time,
+            timeDisplay: partsOfTheDay(), //validDate.inputs.time,
             partsOfTheDay: parts,
             showPastDateError: false,
-            friend: ''
+            friend: 'f' in qs ? qs.f : ''
         }
+
         
     }
 
@@ -120,14 +122,11 @@ class SetReminder extends React.Component {
         this.setState({ date, dateDisplay }, () => {
             const { date, time } = this.state;
             const valid = validateDateTime(date, time);
-            console.log('date dropdown handler: ');
-            console.table(valid)
             this.setState({showPastDateError: !valid.status});
         });
     }
 
     timeDropdownHandler = (val) => {
-        console.log('time dropdownhandler: ', val);
         let time = val;
         let timeDisplay = val;
         if(_.isObject(time)){
@@ -137,11 +136,7 @@ class SetReminder extends React.Component {
         this.setState({ time, timeDisplay }, () => {
             const { date, time } = this.state;
             const valid = validateDateTime(date, time);
-            console.log('time dropdown handler: ');
-            console.table(valid)
             this.setState({showPastDateError: !valid.status, time: valid.converted.time});
-            
-
         });
     }
 

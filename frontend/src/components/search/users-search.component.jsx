@@ -37,7 +37,7 @@ class UserSearch extends React.Component {
         }
         
         if (prevMatch.params.q !== thisMatch.params.q) {
-            const res = await searchUser(thisMatch.params.q || '', current_page);
+            const res = await searchUser(thisMatch.params.q || '', current_page || 1);
             if(res.status === true){
                 this.setState({
                     search_users_meta: res.meta,

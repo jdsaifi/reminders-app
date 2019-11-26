@@ -22,6 +22,21 @@ class UsersController {
             updateProfile: [
                 check('display_name').exists().isString(),
                 check('can_friend_set_reminder').exists().isBoolean(),
+            ],
+            changeUsername: [
+                check('username').exists().isString().bail()
+                .not().isEmpty().withMessage('Username can not be empty.')
+                .isLength({ max: 30 }).withMessage('Username can not be more then 30 character.')
+                .custom(value => {
+                    if(/\s/.test(value)) return Promise.reject('No spaces are allowed in the username.');
+                    return User.countDocuments({ username: value })
+                    .then( res => {
+                        if(res > 0){
+                            return Promise.reject('Username already in use.');
+                        }
+                    })
+                    
+                })
             ]
         };
     }
@@ -80,7 +95,8 @@ class UsersController {
                 res_data = { ...user.toJSON(), friends_count, requests_in_count, requests_out_count }
             }else{
                 // get other user's profile based on username
-                const user = await User.findOne({ username }, select);
+                const user = await User.findOne({ username }, `createdAt display_name dp email
+                first_name last_name updatedAt username timezone can_friend_set_reminder`);
                 if(!user) throw new Error("not_found");
 
                 const auth = req.auth.user;
@@ -450,7 +466,44 @@ class UsersController {
             }
         }
     }
+    // End updateProfile();
 
+    /**
+     * Change Username
+     */
+    async changeUsername(req, res){
+        const clog = req.app.crlog;
+
+        try{
+
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(422).json({
+                    status: 'error',
+                    msg: 'Something went wrong.',
+                    data: errors.array()
+                });
+            }
+
+            const { username } = req.body;
+            const auth = req.auth.user;
+
+            await User.updateOne({ _id: auth._id }, {
+                $set: { username }
+            });
+
+            res.status(201).json({
+                status: 'okay',
+                msg: 'Username has been updated.'
+            });
+        }catch(error){
+            res.status(500).json({
+                status: 'error',
+                msg: error.message
+            });
+        }
+    }
+    // End changeUsername();
 
 }
 

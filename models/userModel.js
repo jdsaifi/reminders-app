@@ -18,8 +18,8 @@ const userSchema = mongoose.Schema({
     },
     username: {
         type: String,
+        trim: true,
         required: true,
-        trim: true
     },
     email: {
         type:String,
@@ -27,9 +27,6 @@ const userSchema = mongoose.Schema({
         unique: true,
         lowercase: true
     },
-    dc: String,
-    mn: String,
-    uin: String,
     password: {
         type: String,
         required: true,

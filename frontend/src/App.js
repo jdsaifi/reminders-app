@@ -24,6 +24,7 @@ import SetReminder from './components/reminders/set-reminder.component';
 import UserSearch from './components/search/users-search.component';
 import FriendRequests from './components/frends/requests.components';
 import UpdateProfile from './components/profile/update-profile.component';
+import ChangeUsername from './components/profile/change-username.component';
 import { BASE_URL } from './utils/utils'
 
 
@@ -38,6 +39,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path={`${BASE_URL}`} component={HomePage} />
             <Route path={`${BASE_URL}login`} component={Login} />
+            <Route exact path={`${BASE_URL}me/change-username`} component={ChangeUsername} />
             <Route exact path={`${BASE_URL}me/edit`} component={UpdateProfile} />
             <Route path={`${BASE_URL}me`} component={Profile} />
             <Route exact path={`${BASE_URL}users/:username`} component={UserProfile} />

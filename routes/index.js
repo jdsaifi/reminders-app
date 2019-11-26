@@ -25,6 +25,7 @@ router.get('/api/v1/users/:username', UsersController.validations.profile, Users
 router.post('/api/v1/users/:username/block', UsersController.blockUser);
 router.post('/api/v1/users/:username/unblock', UsersController.unblockUser);
 router.post('/api/v1/profile', UsersController.validations.updateProfile, UsersController.updateProfile);
+router.post('/api/v1/change-username', UsersController.validations.changeUsername, UsersController.changeUsername);
 // End Users
 
 /** Route - Search */
