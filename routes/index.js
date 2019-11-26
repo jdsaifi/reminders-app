@@ -59,8 +59,7 @@ router.get('/api/v1/friends', FriendsController.getFriendsList);
 
 
 /** Route - testing */
-router.get('/test/get-auth-token/:username', TestingCtrl.getAuthToken);
-router.get('/test/date', TestingCtrl.testDate);
+// router.get('/test/get-auth-token/:username', TestingCtrl.getAuthToken);
 // End testing
 
 

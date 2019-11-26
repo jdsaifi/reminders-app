@@ -3,8 +3,9 @@ const Reminder = require('../models/remindersModel');
 const paginate = require('express-paginate');
 const { check, validationResult, param } = require('express-validator');
 const config = require('../config');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const _ = require('lodash');
+moment.tz.setDefault('Asia/Kolkata');
 
 class RemindersController {
     constructor(){
@@ -60,8 +61,8 @@ class RemindersController {
                 date: body.date,
                 time: body.time,
                 owner: req.auth.user._id,
-                remind_on: datetime,
-                remind_on_unix: datetime.unix()
+                remind_on: datetime.utc(),
+                remind_on_unix: datetime.utc().unix()
             };
 
             if(friend !== '') data['friend'] = friend;

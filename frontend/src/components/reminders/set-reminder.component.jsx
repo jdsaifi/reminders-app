@@ -27,7 +27,7 @@ class SetReminder extends React.Component {
         const qs = queryString.parse(props.location.search);
 
         const validDate = validateDateTime(moment().format('YYYY-MM-DD'), parts[0]);
-
+        
         this.state = {
             showErrorAlert: false,
             showSuccessAlert: false,
@@ -38,7 +38,7 @@ class SetReminder extends React.Component {
             date: validDate.converted.date,
             dateDisplay: 'Today',
             time: validDate.converted.time,
-            timeDisplay: partsOfTheDay(), //validDate.inputs.time,
+            timeDisplay: partsOfTheDay()[1] || 'Night', //validDate.inputs.time,
             partsOfTheDay: parts,
             showPastDateError: false,
             friend: 'f' in qs ? qs.f : ''
@@ -56,7 +56,6 @@ class SetReminder extends React.Component {
         }
 
         const loadFriendsRes = await loadFriends();
-        console.log('loadFriendsRes : ', loadFriendsRes);
     }
 
     saveReminder = async () => {
