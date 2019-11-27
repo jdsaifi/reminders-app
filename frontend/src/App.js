@@ -25,6 +25,7 @@ import UserSearch from './components/search/users-search.component';
 import FriendRequests from './components/frends/requests.components';
 import UpdateProfile from './components/profile/update-profile.component';
 import ChangeUsername from './components/profile/change-username.component';
+import ExpiredReminders from './components/reminders/expired-reminders.component';
 import { BASE_URL } from './utils/utils'
 
 function TestComp(props){
@@ -45,6 +46,7 @@ class App extends React.Component {
           <HeaderMenu />          
           <Switch>
             <Route exact path={`${BASE_URL}`} component={HomePage} />
+            <Route exact path={`${BASE_URL}past-reminders`} component={ExpiredReminders} />
             <Route exact path={`${BASE_URL}testcomp`} component={TestComp} />
             <Route path={`${BASE_URL}login`} component={Login} />
             <Route exact path={`${BASE_URL}me/change-username`} component={ChangeUsername} />

@@ -250,7 +250,8 @@ class RemindersController {
             let [ count, remindersList ] = await Promise.all([
                 Reminder.countDocuments(where),
                 Reminder.find(where, select)
-                .populate('friends', '_id username email display_name first_name last_name createdAt')
+                .populate('friend', '_id display_name')
+                .populate('owner', '_id username display_name dp')
                 .sort('-remind_on')
                 .limit(req.query.limit).skip(req.skip).lean().exec()
             ]);

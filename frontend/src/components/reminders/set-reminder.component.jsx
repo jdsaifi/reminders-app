@@ -54,8 +54,7 @@ class SetReminder extends React.Component {
         if(!isAccessToken() || !await authorize()){
             history.push(`${BASE_URL}login`);
         }
-
-        const loadFriendsRes = await loadFriends();
+        await loadFriends();
     }
 
     saveReminder = async () => {

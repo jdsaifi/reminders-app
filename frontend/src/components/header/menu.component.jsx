@@ -43,6 +43,7 @@ class HeaderMenu extends React.Component{
                             <Nav.Link href={`${BASE_URL}`} className="nav-link">HOME</Nav.Link>
                             <Nav.Link href={`${BASE_URL}me`} className="nav-link">PROFILE</Nav.Link>
                             <Nav.Link href={`${BASE_URL}set-reminder`} className="nav-link">SET REMINDER</Nav.Link>
+                            <Nav.Link href={`${BASE_URL}past-reminders`} className="nav-link">PAST REMINDERS</Nav.Link>
                         </Nav>
 
                         {
