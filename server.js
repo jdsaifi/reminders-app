@@ -55,15 +55,6 @@ app.use( (req, res, next) => {
     next(error);
 });
 
-if(process.env.NODE_ENV === "production"){
-    // const path = require("path");
-    // app.use(express.static('frontend/build'));
-
-    // app.get('*', (req, res) => {
-    //     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
-    // })
-}
-
 /** Debug console */
 app.dlog = APIDebug;
 
@@ -78,9 +69,7 @@ process.on('uncaughtException', function (err) {
     console.error(colors.red("[uncaughtException]"), colors.red(err.stack));
 });
 
-
 const PORT = process.env.PORT || 3001;
-const HOST = config.API.HOST || 'localhost';
 app.listen(PORT, async (error) => {    
     if (error) {
         console.error('Unable to listen for connections', error);

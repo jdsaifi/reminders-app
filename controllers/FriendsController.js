@@ -108,15 +108,6 @@ class FriendsController{
         try{
             let where = {
                 _id: user._id
-                // $and: [
-                //     { remind_on: { $gt: moment.utc() } },
-                //     { 
-                //         $or: [
-                //             { owner: user._id },
-                //             { friends: { $in: [ user._id ] } }
-                //         ] 
-                //     }
-                // ]
             };
 
             const select = '-__v';
@@ -130,22 +121,14 @@ class FriendsController{
                 // .skip(req.skip)
                 .lean().exec()
             ]);
-console.log(requestsInList);
-            let results = requestsInList;
 
-            //const pageCount = Math.ceil(count / req.query.limit);
+            let results = requestsInList;
 
             if(results.length > 0){
                 res.status(200).json({
                     status: 'okay',
                     msg: 'Requests in',
                     data: results,
-                    // meta:{
-                    //     items_count: count,
-                    //     pages_count: pageCount,
-                    //     current_page: req.query.page,
-                    //     has_next: paginate.hasNextPages(req)(pageCount)
-                    // }
                 });
             }else{
                 res.status(404).json({
@@ -382,7 +365,6 @@ console.log(requestsInList);
             }
         }
     }
-
 }
 
 module.exports = new FriendsController();
